@@ -37,7 +37,7 @@ async function main(fileLoc: string) {
 	const setDiff = <T>(a: Set<T>, b: Set<T>) =>
 		new Set([...a].filter((e) => !b.has(e)));
 	const setRetain = <T>(a: Set<T>, b: Set<T>) =>
-		new Set([...a].filter(e => b.has(e)))
+		new Set([...a].filter((e) => b.has(e)));
 
 	const groupBy = <T, K>(arr: T[], groupFn: (e: T, idx: number) => K) => {
 		return arr.reduce<Map<K, T[]>>((ret, e, idx) => {
@@ -52,8 +52,8 @@ async function main(fileLoc: string) {
 		Array.from(groupMap.entries());
 
 	const groupByThree = (_: unknown, idx: number) => Math.floor(idx / 3);
-	
-	const threeGrouped = groupBy(prioritized, groupByThree)
+
+	const threeGrouped = groupBy(prioritized, groupByThree);
 	// console.log("threeGrouped", threeGrouped);
 	const badges = toGroupPair(threeGrouped)
 		.map(([_, group]) => group)
@@ -62,7 +62,7 @@ async function main(fileLoc: string) {
 				.reduce((left, right) => setRetain(left, right))
 		).map((e) => [...e][0]); // get the only element in the set for each group
 
-	console.log('part 2:', badges.reduce((a,b)=>a+b));
+	console.log('part 2:', badges.reduce((a, b) => a + b));
 }
 
 if (Deno.args.length < 1) {
@@ -73,4 +73,3 @@ if (Deno.args.length < 1) {
 
 const fileLoc = Deno.args[0];
 await main(fileLoc);
-
