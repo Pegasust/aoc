@@ -9,7 +9,10 @@
       let pkgs = import nixpkgs { system = sys; }; in
       {
         devShell = pkgs.mkShell {
-          nativeBuildInputs = [ pkgs.bashInteractive pkgs.deno ];
+          nativeBuildInputs = [
+            pkgs.bashInteractive
+            pkgs.deno
+          ];
           shellHook = ''
             echo "Testing deno's installed version:"
             deno --version
