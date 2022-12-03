@@ -12,12 +12,6 @@ function priority(chr: string) {
 		: (ord(chr) - ord('A') + 27);
 }
 
-if (Deno.args.length < 1) {
-	throw Error(
-		'd3_deno.ts expects a single argument that points to AOC\'s day 3 input file',
-	);
-}
-
 async function main(fileLoc: string) {
 	// part 1
 	const text = await Deno.readTextFile(fileLoc);
@@ -69,6 +63,12 @@ async function main(fileLoc: string) {
 		).map((e) => [...e][0]); // get the only element in the set for each group
 
 	console.log('part 2:', badges.reduce((a,b)=>a+b));
+}
+
+if (Deno.args.length < 1) {
+	throw Error(
+		'd3_deno.ts expects a single argument that points to AOC\'s day 3 input file',
+	);
 }
 
 const fileLoc = Deno.args[0];
