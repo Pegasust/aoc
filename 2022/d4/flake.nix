@@ -10,7 +10,7 @@
         overlays = [ ];
         pkgs = import nixpkgs { system = sys; overlays = overlays; };
         shellHookAfter = ''
-          echo "The input files should be placed under ./data/{submission,example}.txt
+          echo "The input files should be placed under ./data/{submission,example}.txt"
           echo "This problem shares one input between two parts"
         '';
         py_pkgs = [ pkgs.python310 ];
@@ -25,23 +25,25 @@
             echo "Run ./run-py.sh for Python's output and ./run-lua.sh for Lua's output"
           '' + shellHookAfter;
         };
-        # devShells.${sys} = {
-        #   lua = pkgs.mkShell {
-        #     nativeBuildInputs = lua_pkgs;
-        #     shellHook = ''
-        #       echo "> Lua runtime"
-        #       echo "Run ./run-lua.sh to see solution's output"
-        #     '' + shellHookAfter;
-        #   };
-        #   python = pkgs.mkShell {
-        #     nativeBuildInputs = py_pkgs;
-        #     shellHook = ''
-        #       echo "> Python3 runtime"
-        #       echo "Run ./run-py.sh to see solution's output"
-        #     '' + shellHookAfter;
-        #
-        #   };
-        # };
+        devShells = {
+          # nix develop ./#lua
+          lua = pkgs.mkShell {
+            nativeBuildInputs = lua_pkgs;
+            shellHook = ''
+              echo "> Lua runtime"
+              echo "Run ./run-lua.sh to see the output of the solution"
+            '' + shellHookAfter;
+          };
+          # nix develop ./#python
+          python = pkgs.mkShell {
+            nativeBuildInputs = py_pkgs;
+            shellHook = ''
+              echo "> Python3 runtime"
+              echo "Run ./run-py.sh to see the output of the solution"
+            '' + shellHookAfter;
+
+          };
+        };
       }
     );
 }
