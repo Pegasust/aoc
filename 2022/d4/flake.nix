@@ -11,31 +11,37 @@
         pkgs = import nixpkgs { system = sys; overlays = overlays; };
         shellHookAfter = ''
           echo "The input files should be placed under ./data/{submission,example}.txt
-          echo "This problem only "
+          echo "This problem shares one input between two parts"
         '';
+        py_pkgs = [ pkgs.python39 ];
+        lua_pkgs = [ (pkgs.lua.withPackages (luapkgs: [ luapkgs.busted luapkgs.luafilesystem ])) ];
       in
-      rec {
-        devShell = devShell.lua;
-        devShell.lua = lib.mkShell {
-          nativeBuildInputs = [
-            pkgs.lua.withPackages
-            (luapkgs:
-              [ luapkgs.busted luapkgs.luafilesystem ]
-            )
-          ];
+      {
+        # Jack of all trades
+        devShell = pkgs.mkShell {
+          nativeBuildInputs = py_pkgs ++ lua_pkgs;
           shellHook = ''
-            echo "> Lua runtime"
-            echo "Run ./run-lua.sh to see solution's output"
+            echo "> Default runtime. This contains both lua and python3 env"
+            echo "Run ./run-py.sh for Python's output and ./run-lua.sh for Lua's output"
           '' + shellHookAfter;
         };
-        devShell.python = lib.mkShell {
-          nativeBuildInputs = [ pkgs.python3 ];
-          shellHook = ''
-            echo "> Python3 runtime"
-            echo "Run ./run-py.sh to see solution's output"
-          '' + shellHookAfter;
-
-        };
+        # devShells.${sys} = {
+        #   lua = pkgs.mkShell {
+        #     nativeBuildInputs = lua_pkgs;
+        #     shellHook = ''
+        #       echo "> Lua runtime"
+        #       echo "Run ./run-lua.sh to see solution's output"
+        #     '' + shellHookAfter;
+        #   };
+        #   python = pkgs.mkShell {
+        #     nativeBuildInputs = py_pkgs;
+        #     shellHook = ''
+        #       echo "> Python3 runtime"
+        #       echo "Run ./run-py.sh to see solution's output"
+        #     '' + shellHookAfter;
+        #
+        #   };
+        # };
       }
     );
 }
