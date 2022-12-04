@@ -13,7 +13,7 @@
           echo "The input files should be placed under ./data/{submission,example}.txt
           echo "This problem shares one input between two parts"
         '';
-        py_pkgs = [ pkgs.python39 ];
+        py_pkgs = [ pkgs.python310 ];
         lua_pkgs = [ (pkgs.lua.withPackages (luapkgs: [ luapkgs.busted luapkgs.luafilesystem ])) ];
       in
       {
