@@ -17,6 +17,7 @@ class MoveInsn:
 def part1(crates: list[list[str]], insns: list[MoveInsn]) -> str:
     for move in insns:
         for _ in range(move.how_many):
+            # print(crates)
             crates[move.to_crate - 1].append(crates[move.from_crate - 1].pop())
     return "".join([crate[-1] for crate in crates])
 
@@ -75,3 +76,4 @@ if __name__ == "__main__":
     import sys
     with open(sys.argv[1], "r") as f:
         main(f)
+

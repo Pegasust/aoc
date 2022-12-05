@@ -15,6 +15,7 @@
         '';
         py_pkgs = [ pkgs.python310 ];
         lua_pkgs = [ (pkgs.lua.withPackages (luapkgs: [ luapkgs.busted luapkgs.luafilesystem ])) ];
+        fennel_pkgs = [];
       in
       {
         # Jack of all trades
