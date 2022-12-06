@@ -14,16 +14,16 @@
           echo "This problem shares one input between two parts"
         '';
         py_pkgs = [ pkgs.python310 ];
-        lua_pkgs = [ (pkgs.lua.withPackages (luapkgs: [ luapkgs.busted luapkgs.luafilesystem ])) ];
-        fennel_pkgs = [ pkgs.lua.withPackages (luapkgs: [ luapkgs.fennel ]) ];
+        # lua_pkgs = [ (pkgs.lua.withPackages (luapkgs: [ luapkgs.busted luapkgs.luafilesystem ])) ];
+        fennel_pkgs = [ (pkgs.lua.withPackages (luapkgs: [ luapkgs.fennel luapkgs.readline ])) ];
       in
       {
         # Jack of all trades
         devShell = pkgs.mkShell {
           nativeBuildInputs = py_pkgs ++ fennel_pkgs;
           shellHook = ''
-            echo "> Default runtime. This contains both lua and python3 env"
-            echo "Run ./run-py.sh for Python's output and ./run-lua.sh for Lua's output"
+            echo "> Default runtime. This contains both fennel and python3 env"
+            echo "Run ./run-py.sh for Python's output and ./run-fnl.sh for Fennel's output"
           '' + shellHookAfter;
         };
         devShells = {
@@ -35,6 +35,17 @@
           #     echo "Run ./run-lua.sh to see the output of the solution"
           #   '' + shellHookAfter;
           # };
+
+          # nix develop ./#fennel
+          fennel = pkgs.mkShell
+            {
+              nativeBuildInputs = fennel_pkgs;
+              shellHook = ''
+                echo "> Fennel runtime"
+                echo "Run ./run-fnl.sh to see output of Fennel solution"
+              '' + shellHookAfter;
+            };
+
           # nix develop ./#python
           python = pkgs.mkShell {
             nativeBuildInputs = py_pkgs;
