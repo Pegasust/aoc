@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 echo "example"
-python3 ./src/d5.py ./data/example.txt
+python3 ./src/d6.py ./data/example.txt
 
 echo "submission"
-python3 ./src/d5.py ./data/submission.txt
+python3 ./src/d6.py ./data/submission.txt
 
