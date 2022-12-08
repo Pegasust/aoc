@@ -26,7 +26,6 @@ def scene_score(grid: list[str], x: int, y: int, memo = None):
     my_height = int(grid[y][x])
     def raytrace(gen):
         counter = 0
-        local_max = 0
         trace = True
         __y, __x = y, x
         for (_y, _x) in gen:
@@ -35,8 +34,7 @@ def scene_score(grid: list[str], x: int, y: int, memo = None):
             __y, __x = _y, _x
             h = int(grid[_y][_x])
             trace = my_height > h
-            counter += 1 if local_max <= h else 0
-            local_max = max(local_max, h)
+            counter += 1 
         return (counter, __x, __y)
 
     print(f"{x=}, {y=}, {my_height=}")
@@ -44,7 +42,7 @@ def scene_score(grid: list[str], x: int, y: int, memo = None):
     print(f"{scores=}")
     score = reduce(lambda acc, v: acc * v[0], scores, 1)
     # print(f"{score=}")
-    return score
+    return (score, scores)
 
 def main(lines: Iterable[str]):
     grid = [line.strip() for line in lines if len(line.strip()) > 0]
@@ -56,7 +54,7 @@ def main(lines: Iterable[str]):
     part1= sum([check(grid, x, y, memo) for y in range(0, len(grid)-0) for x in range(0, len(grid[0]) -0)])
     print("part1", part1)
     memo2=None
-    part2 = max([scene_score(grid, x, y, memo2) for y in range(len(grid)) for x in range(len(grid[0]))])
+    part2 = max([scene_score(grid, x, y, memo2) for y in range(1, len(grid)-1) for x in range(1,len(grid[0])-1)])
     print("part2", part2)
 
 
