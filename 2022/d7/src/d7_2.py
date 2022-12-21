@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from typing import Iterable
 
-
 def main(lines: Iterable[str]):
     ROOT_WD = [""]
     ROOT="/".join(ROOT_WD)
@@ -39,5 +38,3 @@ if __name__ == "__main__":
     import sys
     with open(sys.argv[1], "r") as f:
         main(f)
-
-"/".join([""])
